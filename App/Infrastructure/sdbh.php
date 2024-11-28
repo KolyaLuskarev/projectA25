@@ -17,12 +17,14 @@ class sdbh
         $this->port = $settings['host'] ?: 3306;
         $this->host = $settings['host'] ?: 'localhost';
         $this->dbname = $settings['dbname'] ?: 'test_a25';
-        $this->user = $settings['user'] ?: 'root';
+        $this->user = $settings['user'] ?: 'user_a25';
         $this->pass = $settings['pass'] ?: '';
         $mysql_conn = mysqli_connect($this->host, $this->user, $this->pass, $this->dbname, $this->port);
 
         $this->sql_read = $mysql_conn;
-        $this->sql_write = false;
+        if (!$mysql_conn) {
+            throw new sdbh_exception("Connection failed: " . mysqli_connect_error());
+        }
     }
 
 
